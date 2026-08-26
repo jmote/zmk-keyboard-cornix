@@ -73,10 +73,10 @@
             //               | GUI | ALT  | CTRL | LOWER|  ENTER |  | SPACE | RAISE| CTRL  | ALT   | GUI  |
 
             bindings = <
-&kp ESCAPE      &kp Q         &kp W         &kp E  &kp R  &kp T                           &kp Y          &kp U            &kp I      &kp O     &kp BACKSLASH   &none
+&kp ESCAPE      &kp Q         &kp W         &kp E  &kp R  &kp T                           &kp Y          &kp U            &kp I      &kp O     &kp BACKSLASH   &tog 3
 &kp TAB         &kp A         &kp S         &kp D  &kp F  &kp G                           &kp H          &kp J            &kp K      &kp L     &kp P           &kp ENTER
 &kp LEFT_SHIFT  &kp Z         &kp X         &kp C  &kp V  &kp B      &kp C_MUTE  &kp F22  &kp N          &kp M            &kp COMMA  &kp DOT   &kp UP_ARROW    &kp SLASH
-&kp LCTRL       &kp LEFT_WIN  &kp LEFT_ALT  &mo 3  &mo 1  &kp SPACE                       &kp BACKSPACE  &sk RIGHT_SHIFT  &tog 2     &kp LEFT  &kp DOWN_ARROW  &kp RIGHT
+&kp LCTRL       &kp LEFT_WIN  &kp LEFT_ALT  &mo 4  &mo 1  &kp SPACE                       &kp BACKSPACE  &sk RIGHT_SHIFT  &tog 2     &kp LEFT  &kp DOWN_ARROW  &kp RIGHT
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
@@ -93,10 +93,10 @@
             //               | GUI | ALT  | CTRL | LOWER|  ENTER |  | SPACE | RAISE| CTRL  | ALT   | GUI  |
 
             bindings = <
-&trans  &kp CARET        &kp AT_SIGN     &kp HASH          &kp DOLLAR            &kp PERCENT                  &kp ASTERISK       &kp PLUS               &kp EQUAL          &kp AMPERSAND    &kp BACKSLASH  &none
-&trans  &kp EXCLAMATION  &kp LEFT_BRACE  &kp LEFT_BRACKET  &kp LEFT_PARENTHESIS  &kp LESS_THAN                &kp GREATER_THAN   &kp RIGHT_PARENTHESIS  &kp RIGHT_BRACKET  &kp RIGHT_BRACE  &kp QUESTION   &trans
-&trans  &none            &none           &kp SEMICOLON     &kp COLON             &kp SQT        &none  &none  &kp DOUBLE_QUOTES  &kp MINUS              &kp UNDERSCORE     &none            &none          &none
-&none   &none            &none           &none             &none                 &none                        &trans             &none                  &none              &none            &none          &none
+&trans  &kp CARET        &kp AT_SIGN     &kp HASH          &kp DOLLAR            &kp PERCENT                    &kp ASTERISK       &kp PLUS               &kp EQUAL          &kp AMPERSAND    &kp BACKSLASH  &trans
+&trans  &kp EXCLAMATION  &kp LEFT_BRACE  &kp LEFT_BRACKET  &kp LEFT_PARENTHESIS  &kp LESS_THAN                  &kp GREATER_THAN   &kp RIGHT_PARENTHESIS  &kp RIGHT_BRACKET  &kp RIGHT_BRACE  &kp QUESTION   &trans
+&trans  &trans           &trans          &kp SEMICOLON     &kp COLON             &kp SQT        &trans  &trans  &kp DOUBLE_QUOTES  &kp MINUS              &kp UNDERSCORE     &trans           &trans         &trans
+&trans  &trans           &trans          &trans            &trans                &trans                         &trans             &trans                 &trans             &trans           &trans         &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
@@ -113,20 +113,20 @@
             //                    |         |         |         |         |         | |      |      |      |       |      |
 
             bindings = <
-&none  &none     &none         &none      &none     &none                  &none  &none   &kp N1  &kp N2  &kp N3   &none
-&none  &kp FSLH  &kp ASTERISK  &kp MINUS  &kp PLUS  &none                  &none  &kp N0  &kp N4  &kp N5  &kp N6   &kp ENTER
-&none  &none     &none         &none      &none     &none  &trans  &trans  &none  &none   &kp N7  &kp N8  &kp N9   &kp DEL
-&none  &none     &none         &none      &none     &none                  &none  &none   &trans  &none   &kp DOT  &none
+&trans  &trans    &trans        &trans     &trans    &trans                  &trans  &trans      &kp N1  &kp N2  &kp N3  &trans
+&trans  &kp FSLH  &kp ASTERISK  &kp MINUS  &kp PLUS  &trans                  &trans  &kp N0      &kp N4  &kp N5  &kp N6  &kp ENTER
+&trans  &trans    &trans        &trans     &trans    &trans  &trans  &trans  &trans  &kp PERIOD  &kp N7  &kp N8  &kp N9  &kp DEL
+&trans  &trans    &trans        &trans     &trans    &trans                  &trans  &trans      &trans  &trans  &trans  &trans
             >;
         };
 
         Bluetooth {
             display-name = "Bluetooth";
             bindings = <
-&bt BT_CLR      &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4                   &none  &none  &none  &none  &none  &none
-&none           &bt BT_DISC 0  &bt BT_DISC 1  &bt BT_DISC 2  &bt BT_DISC 3  &bt BT_DISC 4                  &none  &none  &none  &none  &none  &none
-&bt BT_CLR_ALL  &none          &none          &none          &none          &none          &trans  &trans  &none  &none  &none  &none  &none  &none
-&none           &none          &none          &none          &none          &none                          &none  &none  &none  &none  &none  &none
+&bt BT_CLR      &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4                   &trans  &trans  &trans  &trans  &trans  &trans
+&trans          &bt BT_DISC 0  &bt BT_DISC 1  &bt BT_DISC 2  &bt BT_DISC 3  &bt BT_DISC 4                  &trans  &trans  &trans  &trans  &trans  &trans
+&bt BT_CLR_ALL  &trans         &trans         &trans         &trans         &trans         &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans          &trans         &trans         &trans         &trans         &trans                         &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
