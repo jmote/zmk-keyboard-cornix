@@ -1,5 +1,9 @@
 # e73 config
 
+# Enable status advertisement
+CONFIG_ZMK_STATUS_ADVERTISEMENT=y
+CONFIG_ZMK_STATUS_ADV_KEYBOARD_NAME="Cornix"
+
 CONFIG_ADC_NRFX_SAADC=y
 
 # Enable MPU
