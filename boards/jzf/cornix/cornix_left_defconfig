@@ -1,5 +1,12 @@
 # e73 config
 
+# Enable status advertisement
+CONFIG_ZMK_STATUS_ADVERTISEMENT=y
+CONFIG_ZMK_STATUS_ADV_KEYBOARD_NAME="Cornix"
+
+# Split keyboard only: enable peripheral battery fetching
+CONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING=y
+
 CONFIG_ADC_NRFX_SAADC=y
 
 # Enable MPU
