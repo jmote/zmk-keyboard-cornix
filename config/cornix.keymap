@@ -16,14 +16,16 @@
 
 #define HM_TAPPING_TERM_FAST 200
 #define HM_PRIOR_IDLE 70
+
+// Layer indices — MUST match the order the layers appear in `keymap` below.
+// Bindings reference layers by these names, so reordering a layer block
+// only requires updating this list, not hunting through bindings.
+
 #define BASE 0
-#define WIN 1
-#define LOWER 2
-#define RAISE 3
-#define ADJUST 4
-#define NAVI   5
-#define NUM    6
-#define DEBUG  7
+#define SYMBOL 1
+#define NUMPAD 2
+#define QUICKNUM 3
+#define BLUETOOTH 4
 
 // https://github.com/urob/zmk-config/tree/main#timeless-homerow-mods
 
@@ -38,7 +40,9 @@
 #include <dt-bindings/zmk/keys.h>
 
 / {
-    // Activate ADJUST layer by pressing raise and lower
+    // Bluetooth layer is active ONLY while both layer thumbs are held:
+    // the Symbol thumb (&mo SYMBOL) and the QuickNum thumb (&mo QUICKNUM).
+    // It is inherently momentary — releasing either thumb drops it.
 
     behaviors {
         // Positional Homerow mods for shift
@@ -55,7 +59,14 @@
          */
     };
 
-    conditional_layers { compatible = "zmk,conditional-layers"; };
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+
+        bluetooth_layer {
+            if-layers = <SYMBOL QUICKNUM>;
+            then-layer = <BLUETOOTH>;
+        };
+    };
 
     combos { compatible = "zmk,combos"; };
 
@@ -70,13 +81,13 @@
             // |  ESC  |  Q  |  W  |  E   |  R   |  T   |                   |  Y   |  U    |  I    |  O   |   P   | BKSPC |
             // |  TAB  |  A  |  S  |  D   |  F   |  G   |                   |  H   |  J    |  K    |  L   |   ;   |   '   |
             // | SHIFT |  Z  |  X  |  C   |  V   |  B   |  MUTE  |  |       |  N   |  M    |  ,    |  .   |   /   | SHIFT |
-            //               | GUI | ALT  | CTRL | LOWER|  ENTER |  | SPACE | RAISE| CTRL  | ALT   | GUI  |
+            //               | GUI | ALT  | CTRL | QKNUM| SPACE2 |  | BKSPC | SFT2 |  --  | LEFT  | DOWN | RIGHT |
 
             bindings = <
-&kp ESCAPE      &kp Q         &kp W         &kp E  &kp R  &kp T                           &kp Y          &kp U            &kp I      &kp O     &kp BACKSLASH   &kp DELETE
-&kp TAB         &kp A         &kp S         &kp D  &kp F  &kp G                           &kp H          &kp J            &kp K      &kp L     &kp P           &kp ENTER
-&kp LEFT_SHIFT  &kp Z         &kp X         &kp C  &kp V  &kp B      &kp C_MUTE  &kp F22  &kp N          &kp M            &kp COMMA  &kp DOT   &kp UP_ARROW    &kp SLASH
-&kp LCTRL       &kp LEFT_WIN  &kp LEFT_ALT  &mo 4  &mo 1  &kp SPACE                       &kp BACKSPACE  &sk RIGHT_SHIFT  &tog 4     &kp LEFT  &kp DOWN_ARROW  &kp RIGHT
+&kp ESCAPE      &kp Q         &kp W         &kp E         &kp R         &kp T                           &kp Y          &kp U            &kp I      &kp O            &kp BACKSLASH   &kp DELETE
+&kp TAB         &kp A         &kp S         &kp D         &kp F         &kp G                           &kp H          &kp J            &kp K      &kp L            &kp P           &kp ENTER
+&kp LEFT_SHIFT  &kp Z         &kp X         &kp C         &kp V         &kp B      &kp C_MUTE  &kp F22  &kp N          &kp M            &kp COMMA  &kp DOT          &kp UP_ARROW    &kp SLASH
+&kp LCTRL       &kp LEFT_WIN  &kp LEFT_ALT  &mo QUICKNUM  &mo SYMBOL  &kp SPACE                       &kp BACKSPACE  &sk RIGHT_SHIFT  &none      &kp LEFT         &kp DOWN_ARROW  &kp RIGHT
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
@@ -120,16 +131,6 @@
             >;
         };
 
-        Bluetooth {
-            display-name = "Bluetooth";
-            bindings = <
-&bt BT_CLR      &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4                   &trans  &trans  &trans  &trans  &trans  &tog 3
-&trans          &bt BT_DISC 0  &bt BT_DISC 1  &bt BT_DISC 2  &bt BT_DISC 3  &bt BT_DISC 4                  &trans  &trans  &trans  &trans  &trans  &trans
-&bt BT_CLR_ALL  &trans         &trans         &trans         &trans         &trans         &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans          &trans         &trans         &trans         &trans         &trans                         &trans  &trans  &trans  &trans  &trans  &trans
-            >;
-        };
-
         QuickNum {
             display-name = "Qknum";
 
@@ -144,10 +145,24 @@
 &kp ESC  &kp F1        &kp F2        &kp F3   &kp F4        &kp F5                         &kp F6        &kp F7   &kp F8    &kp F9   &kp F10  &kp F11
 &trans   &kp NUMBER_1  &kp NUMBER_2  &kp N3   &kp NUMBER_4  &kp N5                         &kp NUMBER_6  &kp N7   &kp N8    &kp N9   &kp N0   &kp F12
 &trans   &kp N6        &kp N7        &kp N8   &kp N9        &kp N0         &trans  &trans  &kp TAB       &kp INS  &kp HOME  &kp END  &trans   &trans
-&none    &none         &none         &kp TAB  &trans        &kp BACKSPACE                  &trans        &trans   &tog 4    &trans   &trans   &trans
+&none    &none         &none         &kp TAB  &trans        &kp BACKSPACE                  &trans        &trans   &none     &trans   &trans   &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+        };
+
+        Bluetooth {
+            display-name = "Bluetooth";
+
+            // Active only while Symbol thumb + QuickNum thumb are both held
+            // (see conditional_layers above). Momentary — no exit key needed.
+
+            bindings = <
+&bt BT_CLR      &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4                   &trans  &trans  &trans  &trans  &trans  &none
+&trans          &bt BT_DISC 0  &bt BT_DISC 1  &bt BT_DISC 2  &bt BT_DISC 3  &bt BT_DISC 4                  &trans  &trans  &trans  &trans  &trans  &trans
+&bt BT_CLR_ALL  &trans         &trans         &trans         &trans         &trans         &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans          &trans         &trans         &trans         &trans         &trans                         &trans  &trans  &trans  &trans  &trans  &trans
+            >;
         };
     };
 };
